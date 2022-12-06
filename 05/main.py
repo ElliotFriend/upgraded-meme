@@ -37,23 +37,12 @@ for row in drawing[:-1]:
         if crate != '':
             stacks[i].insert(0, crate)
 
-print("STARTING STACKS")
-for col in stacks:
-    print(f"{col}: {stacks[col]}")
-
-steps = []
-
 def calc_move(step):
     _, amount, _, col_from, _, col_to = step.split(' ')
-    return [amount, col_from, col_to]
+    return [int(amount), int(col_from), int(col_to)]
 
 for move in procedure:
-    steps.append(calc_move(move))
-# print(steps)
-
-for step in steps:
-    # print(step)
-    amount, col_from, col_to = int(step[0]), int(step[1]), int(step[2])
+    amount, col_from, col_to = calc_move(move)
     move_crates = stacks[col_from][len(stacks[col_from])-amount:]
     stacks[col_from] = stacks[col_from][:len(stacks[col_from])-amount]
     stacks[col_to].extend(move_crates)
@@ -61,28 +50,7 @@ for step in steps:
     #     crate = stacks[col_from].pop()
     #     stacks[col_to].append(crate)
 
-print("ENDING STACKS")
 message = []
 for col in stacks:
-    print(f"{col}: {stacks[col]}")
     message.append(stacks[col][-1])
-
 print(''.join(message))
-
-
-#
-# n = 4
-# # str = drawing[-1]
-# # chunks = [str[i:i+n] for i in range(0, len(str), n)]
-# # print(chunks)
-# # print(drawing[-1][:len(drawing[-1]) // 4])
-# for row in drawing:
-#     chunks = [row[i:i+n] for i in range(0, len(row), n)]
-#     print(chunks)
-
-# for i in
-
-# print("PROCEDURE BELOW:")
-# print(procedure)
-# print("DRAWING BELOW:")
-# print(drawing)
