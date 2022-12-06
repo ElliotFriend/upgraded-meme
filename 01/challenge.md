@@ -1,4 +1,4 @@
-# Day 1: Calorie Counting
+# Day 01: Calorie Counting
 
 Santa's reindeer typically eat regular reindeer food, but they need a lot of
 [magical energy](https://adventofcode.com/2018/day/25) to deliver presents on

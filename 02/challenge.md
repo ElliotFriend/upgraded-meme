@@ -1,4 +1,4 @@
-# Day 2: Rock Paper Scissors
+# Day 02: Rock Paper Scissors
 
 ## Part 01
 
