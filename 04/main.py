@@ -19,7 +19,8 @@ for pair in elf_pairs:
     elf1, elf2 = pair.split(',')
     elf1 = expand(elf1)
     elf2 = expand(elf2)
-    if set(elf1).issubset(elf2) or set(elf2).issubset(elf1):
+    # if set(elf1).issubset(elf2) or set(elf2).issubset(elf1):
+    if set(elf1).intersection(elf2):
         nested_elves += 1
 
 print(nested_elves)
