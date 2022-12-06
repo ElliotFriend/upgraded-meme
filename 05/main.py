@@ -37,8 +37,9 @@ for row in drawing[:-1]:
         if crate != '':
             stacks[i].insert(0, crate)
 
-# for col in stacks:
-#     print(f"{col}: {stacks[col]}")
+print("STARTING STACKS")
+for col in stacks:
+    print(f"{col}: {stacks[col]}")
 
 steps = []
 
@@ -52,11 +53,15 @@ for move in procedure:
 
 for step in steps:
     # print(step)
-    amount, col_from, col_to = step[0], step[1], step[2]
-    for i in range(0, int(amount)):
-        crate = stacks[int(col_from)].pop()
-        stacks[int(col_to)].append(crate)
+    amount, col_from, col_to = int(step[0]), int(step[1]), int(step[2])
+    move_crates = stacks[col_from][len(stacks[col_from])-amount:]
+    stacks[col_from] = stacks[col_from][:len(stacks[col_from])-amount]
+    stacks[col_to].extend(move_crates)
+    # for i in range(0, amount):
+    #     crate = stacks[col_from].pop()
+    #     stacks[col_to].append(crate)
 
+print("ENDING STACKS")
 message = []
 for col in stacks:
     print(f"{col}: {stacks[col]}")
