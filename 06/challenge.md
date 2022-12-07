@@ -43,8 +43,8 @@ occur is after the fourth character is received, making the most recent four
 characters `mjqj`. Because `j` is repeated, this isn't a marker.
 
 The first time a marker appears is after the **seventh** character arrives. Once
-it does, the last four characters received are `jpqm`, which are all different. In
-this case, your subroutine should report the value **`7`**, because the first
+it does, the last four characters received are `jpqm`, which are all different.
+In this case, your subroutine should report the value **`7`**, because the first
 start-of-packet marker is complete after 7 characters have been processed.
 
 Here are a few more examples:
