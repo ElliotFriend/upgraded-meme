@@ -1,10 +1,10 @@
 # Day 01: Calorie Counting
 
 Santa's reindeer typically eat regular reindeer food, but they need a lot of
-[magical energy](https://adventofcode.com/2018/day/25) to deliver presents on
-Christmas. For that, their favorite snack is a special type of _star_ fruit that
-only grows deep in the jungle. The Elves have brought you on their annual
-expedition to the grove where the fruit grows.
+[magical energy] to deliver presents on Christmas. For that, their favorite
+snack is a special type of _star_ fruit that only grows deep in the jungle. The
+Elves have brought you on their annual expedition to the grove where the fruit
+grows.
 
 To supply enough magical energy, the expedition needs to retrieve a minimum of
 _fifty stars_ by December 25th. Although the Elves assure you that the grove has
@@ -31,6 +31,7 @@ inventory (if any) by a blank line.
 For example, suppose the Elves finish writing their items' Calories and end up
 with the following list:
 
+```text
 1000
 2000
 3000
@@ -45,6 +46,7 @@ with the following list:
 9000
 
 10000
+```
 
 This list represents the Calories of the food carried by five Elves:
 
@@ -83,3 +85,5 @@ Calories), then the third Elf (with `11000` Calories), then the fifth Elf (with
 
 Find the top three Elves carrying the most Calories. **How many Calories are
 those Elves carrying in total?**
+
+[magical energy]: https://adventofcode.com/2018/day/25
