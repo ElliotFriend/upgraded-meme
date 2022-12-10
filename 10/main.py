@@ -7,7 +7,7 @@ with open('input.txt', 'r') as f:
     contents = f.read().splitlines()
 # print(contents)
 
-x_reg = 0
+x_reg = 1
 cycle_count = 0
 ss_sum = 0
 # sprite_position = 0
@@ -25,7 +25,7 @@ def check_cycle_count(value = 0):
     #     print(f"row: {row}\t\tcol: {col}\t\tx_reg: {x_reg}\tmath: {cycle_count % 40}")
     cycle_count += 1
 
-    if col in range(x_reg, x_reg + 3):
+    if col in range(x_reg - 1, x_reg + 2):
         # print(f"cycle: {cycle_count}\tmath: {math.ceil(cycle_count // 40)}")
         crt_rows[row].append('#')
     else:
@@ -33,7 +33,7 @@ def check_cycle_count(value = 0):
 
     x_reg += value
     if cycle_count + 1 in [20, 60, 100, 140, 180, 220]:
-        ss_sum += (cycle_count + 1) * (x_reg + 1)
+        ss_sum += (cycle_count + 1) * x_reg
 
 for line in contents:
     if line == 'noop':
