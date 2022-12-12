@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import re, pprint, heapq
+import re, pprint, heapq, math
 
 from collections import defaultdict
 
@@ -39,23 +39,28 @@ for m in monkeys:
         "true_throw": true_throw,
         "false_throw": false_throw
     }
+
+print(math.lcm(23, 19, 13, 17))
+main_divisor = math.lcm(*[m_dict[m]['divisor'] for m in m_dict])
+print(main_divisor)
+
 def monkey_throw(catcher, worry):
     global m_dict
-
     m_dict[catcher]['items'].append(worry)
 
 
 def monkey_turn(monkey):
-    # global m_dict
 
     for i in range(0, len(monkey['items'])):
-
         old = int(monkey['items'].pop(0))
         # print(f"\tinspecting item: {old}")
-        new = eval(monkey['operation']) // 3
+        new = eval(monkey['operation']) % main_divisor
         # print(f"\tnew worry level: {new}")
         # print(new)
         # print(f"\tmonkey test: {new} / {monkey['divisor']}")
+        # new %= main_divisor
+        # if new > main_divisor:
+
         if new % monkey['divisor'] == 0:
             # print(f"\tTEST TRUE throwing to monkey: {monkey['true_throw']}")
             monkey_throw(monkey['true_throw'], new)
@@ -67,7 +72,7 @@ def monkey_turn(monkey):
 
 # pprint.pprint(m_dict)
 
-for i in range(0, 20):
+for i in range(0, 10000):
     for m in m_dict:
         # print(f"monkey {m}")
         monkey_inspected_items[m] += len(m_dict[m]['items'])
@@ -83,4 +88,4 @@ for k, v in monkey_business_dict:
 # pprint.pprint(m_dict)
 # pprint.pprint(dict(monkey_inspected_items))
 print(f"Part 01: {monkey_business}")
-print(f"Part 02: {None}")
+print(f"Part 02: {monkey_inspected_items}")
