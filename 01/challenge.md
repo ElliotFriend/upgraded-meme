@@ -67,6 +67,8 @@ by the fourth Elf).
 Find the Elf carrying the most Calories. **How many total Calories is that Elf
 carrying?**
 
+Your puzzle answer was `74394`.
+
 ## Part 02
 
 By the time you calculate the answer to the Elves' question, they've already
@@ -85,5 +87,7 @@ Calories), then the third Elf (with `11000` Calories), then the fifth Elf (with
 
 Find the top three Elves carrying the most Calories. **How many Calories are
 those Elves carrying in total?**
+
+Your puzzle answer was `212836`.
 
 [magical energy]: https://adventofcode.com/2018/day/25

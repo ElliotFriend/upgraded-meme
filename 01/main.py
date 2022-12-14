@@ -1,24 +1,39 @@
-elf_lists = None
+#!/usr/bin/env python3
+
+contents = None
 with open('input.txt', 'r') as f:
-    elf_lists = f.read().splitlines()
+    contents = f.read().split('\n\n')
 
-lists_dict = {}
+class Elf:
+    max_cal = 0
+    top_three = []
+    def __init__(self, id, items):
+        self.id = id
+        self.items = items
 
-carrying_calories = []
-elf_cal = 0
+        self.total_cal = sum(items)
+        if self.total_cal > Elf.max_cal:
+            Elf.max_cal = self.total_cal
 
-for item in elf_lists:
-    if item != '':
-        elf_cal += int(item)
-    else:
-        carrying_calories.append(elf_cal)
-        elf_cal = 0
+        Elf.top_three.append(self.total_cal)
+        Elf.top_three.sort(reverse=True)
+        Elf.top_three = Elf.top_three[:3]
 
-carrying_calories.sort(reverse=True)
-print(carrying_calories)
+    def __repr__(self):
+        return f"Elf{self.id}:\tTotal Calories: {self.total_cal}\tItems: {self.items}"
 
-print(f"Max Calorie Carrier has: {carrying_calories[0]}")
-print(
-    f"Top Three Carriers have: {carrying_calories[0] + carrying_calories[1] + carrying_calories[2]}")
+    def empty_snacks(self):
+        self.snacks = []
+        self.total_cal = sum(self.snacks)
+
+elves = {}
+
+for n in range(len(contents)):
+    list = [int(i) for i in contents[n].rstrip().split('\n')]
+    elf = Elf(n, list)
+    elves[n] = elf
+
+print(f"Part 01: {Elf.max_cal}")
+print(f"Part 02: {sum(Elf.top_three)}")
 
 
