@@ -11,12 +11,14 @@ with open('input.txt', 'r') as f:
 sand_origin = (500, 0)
 all_sand = set()
 abyss_reached = False
+hole_plugged = False
 
 # maybe a class?
 class Line:
     lowest_x = 500
     highest_x = 500
     highest_y = 0
+    floor = 0
     rock_points = set()
 
     def __init__(self, start, end):
@@ -41,6 +43,7 @@ class Line:
 
         if max(start[1], end[1]) > Line.highest_y:
             Line.highest_y = max(start[1], end[1])
+            Line.floor = Line.highest_y + 2
         if min(start[0], end[0]) < Line.lowest_x:
             Line.lowest_x = min(start[0], end[0])
         if max(start[0], end[0]) > Line.highest_x:
@@ -72,44 +75,61 @@ for i in range(len(contents)):
     points = [(int(x), int(y)) for [x, y] in [p.split(',') for p in contents[i].split(' -> ')]]
     paths[i] = Path(points)
 
+# floor_points = [(0, Line.highest_y + 2), (1000, Line.highest_y + 2)]
+# paths['floor'] = Path(floor_points)
+
 # print(Line.all_points)
 # pprint.pprint(paths)
-print(Line.lowest_x, Line.highest_x, Line.highest_y)
+# print(Line.lowest_x, Line.highest_x, Line.highest_y, Line.floor)
+# print(Line.rock_points)
 
-def get_next_sand_pos(sand_pos):
+def get_next_sand_pos(x, y, part):
     global abyss_reached
-    (x, y) = sand_pos
+    # global hole_plugged
+    # sand_pos (x, y) = sand_pos
     down_pos = (x, y + 1)
-    if down_pos[1] > Line.highest_y:
+    if y + 1 > Line.highest_y and part == 1:
         abyss_reached = True
         return False
     down_left_pos = (x - 1, y + 1)
     down_right_pos = (x + 1, y + 1)
-    if down_pos not in all_sand and down_pos not in Line.rock_points:
-        return down_pos
-    elif down_left_pos not in all_sand and down_left_pos not in Line.rock_points:
-        return down_left_pos
-    elif down_right_pos not in all_sand and down_right_pos not in Line.rock_points:
-        return down_right_pos
+    all_blocks = [*all_sand, *Line.rock_points]
+    if y + 1 < Line.floor:
+        if down_pos not in all_blocks:
+            return down_pos
+        elif down_left_pos not in all_blocks:
+            return down_left_pos
+        elif down_right_pos not in all_blocks:
+            return down_right_pos
+        else:
+            return (x, y)
     else:
         return (x, y)
+    # else:
+    #     hole_plugged = True
+    #     return (x, y)
 
 
-def drop_sand(sand_pos):
+def drop_sand(x, y, part):
     global all_sand
+    global hole_plugged
     # sand_origin = (500, 0)
-    (x, y) = sand_pos
-    abyss_threshold = Line.highest_y + 2
+    # (x, y) = sand_pos
+    # abyss_threshold = Line.highest_y + 2
     # for i in range(y, Line.highest_y):
-    next_pos = get_next_sand_pos(sand_pos)
+    next_pos = get_next_sand_pos(x, y, part)
     # print(sand_pos, next_pos)
     if next_pos == False:
         return False
-    elif next_pos == sand_pos:
-        all_sand.add(sand_pos)
+    # elif next_pos :
+    #     hole_plugged = True
+    elif next_pos == (x, y):
+        if y == 1:
+            hole_plugged = True
+        all_sand.add((x, y))
         # break
     else:
-        drop_sand(next_pos)
+        drop_sand(next_pos[0], next_pos[1], part)
         # if next_pos in all_sand or next_pos in Line.rock_points:
         #     all_sand.add(sand_pos)
         #     break
@@ -117,31 +137,57 @@ def drop_sand(sand_pos):
         #     pass
 
 # sand_landed = True
-while not abyss_reached:
-    sand_landed = drop_sand(sand_origin)
+def part_one():
+    while not abyss_reached:
+        drop_sand(500, 0, 1)
     # if sand_landed == False:
     #     abyss_reached = True
     #     break
 
-grid = []
-for y in range(0, Line.highest_y + 2):
-    grid.append([])
-    for x in range(Line.lowest_x - 1, Line.highest_x + 2):
-        if (x, y) in Line.rock_points:
-            grid[y].append('#')
-        elif x == 500 and y == 0:
-            grid[y].append('+')
-        elif (x, y) in all_sand:
-            grid[y].append('o')
-        else:
-            grid[y].append('.')
-    # grid[y].append('.')
+    # grid = []
+    # for y in range(0, Line.highest_y + 2):
+    #     grid.append([])
+    #     for x in range(Line.lowest_x - 1, Line.highest_x + 2):
+    #         if (x, y) in Line.rock_points:
+    #             grid[y].append('#')
+    #         elif x == 500 and y == 0:
+    #             grid[y].append('+')
+    #         elif (x, y) in all_sand:
+    #             grid[y].append('o')
+    #         else:
+    #             grid[y].append('.')
+    # # grid[y].append('.')
+    # for g in grid:
+    #     print(''.join(g))
 
 
+def part_two():
+    # while not hole_plugged:
+    for i in range(28000):
+        drop_sand(500, 0, 2)
+    # if sand_landed == False:
+    #     abyss_reached = True
+    #     break
 
-for g in grid:
-    print(''.join(g))
+    # grid = []
+    # for y in range(0, Line.floor + 1):
+    #     grid.append([])
+    #     for x in range(Line.lowest_x - 100, Line.highest_x + 100):
+    #         if (x, y) in Line.rock_points or y == Line.floor:
+    #             grid[y].append('#')
+    #         elif x == 500 and y == 0:
+    #             grid[y].append('+')
+    #         elif (x, y) in all_sand:
+    #             grid[y].append('o')
+    #         else:
+    #             grid[y].append('.')
+    # # grid[y].append('.')
+    # for g in grid:
+    #     print(''.join(g))
 
 if __name__ == '__main__':
-    print(f"Part 01: {len(all_sand)}")
-    print(f"Part 02: {None}")
+    # part_one()
+    # print(f"Part 01: {len(all_sand)}")
+
+    part_two()
+    print(f"Part 02: {len(all_sand)}")
