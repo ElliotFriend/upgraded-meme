@@ -33,7 +33,6 @@ for n in range(len(contents)):
     elf = Elf(n, list)
     elves[n] = elf
 
-print(f"Part 01: {Elf.max_cal}")
-print(f"Part 02: {sum(Elf.top_three)}")
-
-
+if __name__ == '__main__':
+    print(f"Part 01: {Elf.max_cal}")
+    print(f"Part 02: {sum(Elf.top_three)}")
